@@ -2,9 +2,11 @@ const express = require("express");
 const app = express();
 const axios = require("axios");
 const fs = require("fs");
+const { v1: uuidv1, v4: uuidv4 } = require("uuid");
 
 path = require("path");
 const cors = require("cors");
+const getUsers = require("./getUsers");
 
 app.use(
   cors({
@@ -16,7 +18,7 @@ async function getRundomUser() {
   return await axios.get("https://randomuser.me/api/");
 }
 
-// app.use(express.static("public"));
+app.use(express.static("public"));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -27,13 +29,14 @@ app.post("/roommate", (req, res) => {
   getRundomUser().then((data) => {
     const newRoomme = `${data.data.results[0].name.first} ${data.data.results[0].name.last}`;
     const newData = {
+      id: uuidv1(),
       name: newRoomme,
     };
 
     try {
       if (!fs.existsSync("public/roommates.json")) {
         fs.writeFileSync(
-          "roommates.json",
+          "public/roommates.json",
           JSON.stringify([newData], null, 2),
           "utf8"
         );
@@ -41,7 +44,7 @@ app.post("/roommate", (req, res) => {
         fs.readFile("public/roommates.json", (err, data) => {
           if (data.length == 0) {
             fs.writeFileSync(
-              "roommates.json",
+              "public/roommates.json",
               JSON.stringify([newData], null, 2),
               "utf8"
             );
@@ -65,26 +68,11 @@ app.post("/roommate", (req, res) => {
 });
 
 app.get("/roommates", (req, res) => {
-  fs.readFile("public/roommates.json", (err, data) => {
-    if (data.length == 0) {
-      return;
-    } else {
-      let json = JSON.parse(data);
-      res.json(json);
-    }
+  getUsers().then((data) => {
+    res.json(data);
   });
 });
 
 app.listen(3000, () => {
-  console.log("ESCUCHANDO PUERTO 3000");
+  console.log("en puerto 3000");
 });
-
-// const getUsers = () => {
-//   let users = fs.readFileSync("roommates.json");
-//   return JSON.parse(users);
-// };
-
-// const setUsers = (users) => {
-//   let newUsersObject = JSON.stringify(users, null, 2);
-//   fs.writeFileSync("roommates.json", newUsersObject);
-// };
