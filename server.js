@@ -20,7 +20,7 @@ async function getRundomUser() {
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/index.html"));
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 app.post("/roommate", (req, res) => {
@@ -31,14 +31,14 @@ app.post("/roommate", (req, res) => {
     };
 
     try {
-      if (!fs.existsSync("roommates.json")) {
+      if (!fs.existsSync("public/roommates.json")) {
         fs.writeFileSync(
           "roommates.json",
           JSON.stringify([newData], null, 2),
           "utf8"
         );
       } else {
-        fs.readFile("roommates.json", (err, data) => {
+        fs.readFile("public/roommates.json", (err, data) => {
           if (data.length == 0) {
             fs.writeFileSync(
               "roommates.json",
@@ -49,7 +49,7 @@ app.post("/roommate", (req, res) => {
             let json = JSON.parse(data);
             json.push(newData);
             fs.writeFileSync(
-              "roommates.json",
+              "public/roommates.json",
               JSON.stringify(json, null, 2),
               "utf8"
             );
@@ -65,7 +65,7 @@ app.post("/roommate", (req, res) => {
 });
 
 app.get("/roommates", (req, res) => {
-  fs.readFile("roommates.json", (err, data) => {
+  fs.readFile("public/roommates.json", (err, data) => {
     if (data.length == 0) {
       return;
     } else {
