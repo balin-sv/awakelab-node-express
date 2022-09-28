@@ -1,31 +1,20 @@
 [
   {
     "id": "3f9055f0-3f2f-11ed-bd3e-8df1114dc394",
-    "name": "Savannah Chen"
+    "name": "Savannah Chen",
+    "recibe": 0,
+    "debe": 0
   },
   {
-    "id": "56a4ec30-3f3c-11ed-b052-bb3e90c34b89",
-    "name": "Jaël Metselaar"
+    "id": "ece431c0-3f68-11ed-81aa-6f9e4601ae15",
+    "name": "Eva Abraham",
+    "recibe": 0,
+    "debe": 0
   },
   {
-    "id": "57df6800-3f3c-11ed-a8a1-8b6d545798ae",
-    "name": "Irene Trujillo"
-  },
-  {
-    "id": "5ba28a80-3f3c-11ed-9579-3fe97b144bde",
-    "name": "Justina Grossmann"
-  },
-
-  {
-    "id": "844c1640-3f3c-11ed-8fb1-f916492ea877",
-    "name": "Vincent Park"
-  },
-  {
-    "id": "8fd45b80-3f3c-11ed-b89a-993a25483a9e",
-    "name": "Nicolas Alali"
-  },
-  {
-    "id": "94c52890-3f3c-11ed-a03d-bfb1a45c985f",
-    "name": "Yonah Sijbrandij"
+    "id": "ee1b7940-3f68-11ed-81aa-6f9e4601ae15",
+    "name": "Ananias Barbosa",
+    "debe": 0,
+    "recibe": 0
   }
 ]

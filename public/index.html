@@ -16,7 +16,7 @@
   <div class="row w-100 m-auto">
     <div class="col-4">
       <h5>Roommates</h5>
-      <button id="post-roome" class="btn text-white mb-2">
+      <button onclick="nuevoRoommate()" class="btn text-white mb-2">
         Agregar roommate
       </button>
       <table class="table">
@@ -136,7 +136,7 @@ Articulos de limpieza</textarea>
         $("#roommatesSelectModal").html("");
         roommates.forEach((r) => {
           $("#roommatesSelect").append(`
-          <option value="${r.name}">${r.name}</option>
+          <option value="${[r.id, r.name]}">${r.name}</option>
           `);
           $("#roommatesSelectModal").append(`
           <option value="${r.name}">${r.name}</option>
@@ -151,6 +151,7 @@ Articulos de limpieza</textarea>
         });
         $("#gastosHistorial").html("");
         gastos.forEach((g) => {
+
           $("#gastosHistorial").append(`
                 <tr>
                   <td>${g.roommate}</td>
@@ -167,30 +168,25 @@ Articulos de limpieza</textarea>
         console.log(e);
       }
     };
-    document.getElementById('post-roome').addEventListener("click", (e) => {
-      e.preventDefault();
+
+    const nuevoRoommate = () => {
       console.log("click")
-      fetch("http://localhost:3000/roommate", { method: "POST" }).then((response) => {
-        console.log(response)
+      fetch("http://localhost:3000/roommate", { method: "POST" }).then(() => {
         imprimir();
       });
-    })
-    // const nuevoRoommate = () => {
-    //   e.preventDefault();
-    //   console.log("click")
-    //   fetch("http://localhost:3000/roommate", { method: "POST" }).then(() => {
-    //     imprimir();
-    //   });
-    // };
+    };
 
     const agregarGasto = async () => {
       const roommateSelected = $("#roommatesSelect").val();
+      const userInfoArray = roommateSelected.split(",")
+
       const descripcion = $("#descripcion").val();
       const monto = Number($("#monto").val());
       fetch("http://localhost:3000/gasto", {
         method: "POST",
         body: JSON.stringify({
-          roommate: roommateSelected,
+          uid: userInfoArray[0],
+          roommate: userInfoArray[1],
           descripcion,
           monto,
         }), headers: { "Content-Type": "application/json" }
