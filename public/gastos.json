@@ -1,12 +1,14 @@
 [
   {
-    "roommate": "Maddison Lee",
+    "roommate": "Savannah Chen",
     "descripcion": "Articulos de limpieza",
-    "monto": 15000
+    "monto": 15000,
+    "id": "7f189ae0-3f3c-11ed-b1c2-c99d136e1159"
   },
   {
-    "roommate": "Maddison Lee",
+    "roommate": "Justina Grossmann",
     "descripcion": "Articulos de limpieza",
-    "monto": 15000
+    "monto": 15000,
+    "id": "80a29640-3f3c-11ed-8ed8-f113dc391d56"
   }
 ]
