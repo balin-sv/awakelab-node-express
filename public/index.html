@@ -120,14 +120,17 @@ Articulos de limpieza</textarea>
     const getGastos = async () => {
       const res = await fetch("http://localhost:3000/gastos");
       const data = await res.json();
-      gastos = data.gastos;
+      console.log(data)
+
+      gastos = data;
     };
 
     const imprimir = async () => {
       console.log("in imprimir")
+
       try {
         await getRoommates();
-        // await getGastos();
+        await getGastos();
         $("#roommates").html("");
         $("#roommatesSelect").html("");
         $("#roommatesSelectModal").html("");
@@ -147,19 +150,19 @@ Articulos de limpieza</textarea>
               `);
         });
         $("#gastosHistorial").html("");
-        // gastos.forEach((g) => {
-        //   $("#gastosHistorial").append(`
-        //         <tr>
-        //           <td>${g.roommate}</td>
-        //           <td>${g.descripcion}</td>
-        //           <td>${g.monto}</td>
-        //           <td class="d-flex align-items-center justify-content-between">
-        //             <i class="fas fa-edit text-warning" onclick="editGasto('${g.id}')" data-toggle="modal" data-target="#exampleModal"></i>
-        //             <i class="fas fa-trash-alt text-danger" onclick="deleteGasto('${g.id}')" ></i>
-        //           </td>
-        //         </tr>
-        //       `);
-        // });
+        gastos.forEach((g) => {
+          $("#gastosHistorial").append(`
+                <tr>
+                  <td>${g.roommate}</td>
+                  <td>${g.descripcion}</td>
+                  <td>${g.monto}</td>
+                  <td class="d-flex align-items-center justify-content-between">
+                    <i class="fas fa-edit text-warning" onclick="editGasto('${g.id}')" data-toggle="modal" data-target="#exampleModal"></i>
+                    <i class="fas fa-trash-alt text-danger" onclick="deleteGasto('${g.id}')" ></i>
+                  </td>
+                </tr>
+              `);
+        });
       } catch (e) {
         console.log(e);
       }
@@ -190,7 +193,7 @@ Articulos de limpieza</textarea>
           roommate: roommateSelected,
           descripcion,
           monto,
-        }),
+        }), headers: { "Content-Type": "application/json" }
       }).then(() => {
         imprimir();
       });
