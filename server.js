@@ -133,6 +133,27 @@ app.delete("/gasto", (req, res) => {
   res.sendStatus(200);
 });
 
+app.put("/gasto", (req, res) => {
+  let payload = req.body;
+  let newObj = { ...payload, id: uuidv1() };
+  fs.readFile("public/gastos.json", (err, data) => {
+    let arr = JSON.parse(data);
+    let aux = arr.map((item) => {
+      if (item.id == req.query.id) {
+        return newObj;
+      } else {
+        return item;
+      }
+    });
+    fs.writeFileSync(
+      "public/gastos.json",
+      JSON.stringify(aux, null, 2),
+      "utf8"
+    );
+  });
+  res.sendStatus(200);
+});
+
 app.listen(3000, () => {
   console.log("en puerto 3000");
 });

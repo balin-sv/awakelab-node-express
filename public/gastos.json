@@ -1,14 +1,23 @@
 [
   {
-    "roommate": "Savannah Chen",
-    "descripcion": "Articulos de limpieza",
-    "monto": 15000,
-    "id": "7f189ae0-3f3c-11ed-b1c2-c99d136e1159"
+    "id": "8d01ddc0-3f40-11ed-bb2c-2179effc1c75"
   },
   {
-    "roommate": "Justina Grossmann",
+    "id": "6d154240-3f40-11ed-834f-651edf431446"
+  },
+  {
+    "id": "19e26e40-3f40-11ed-a1bb-8775bae0aaba"
+  },
+  {
+    "roommate": "Savannah Chen",
     "descripcion": "Articulos de limpieza",
-    "monto": 15000,
-    "id": "80a29640-3f3c-11ed-8ed8-f113dc391d56"
+    "monto": 145000,
+    "id": "bb7187f0-3f40-11ed-9a5e-43a4c28c25cb"
+  },
+  {
+    "roommate": "Savannah Chen",
+    "descripcion": "Articulos de limpieza",
+    "monto": 555555,
+    "id": "c6374080-3f40-11ed-958a-716013d53f2a"
   }
 ]
