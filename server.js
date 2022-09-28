@@ -19,7 +19,6 @@ app.use(
 async function getRundomUser() {
   return await axios.get("https://randomuser.me/api/");
 }
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -72,19 +71,13 @@ app.post("/roommate", (req, res) => {
 });
 
 app.post("/gasto", (req, res) => {
-  // getRundomUser().then((data) => {
-  //   const newRoomme = `${data.data.results[0].name.first} ${data.data.results[0].name.last}`;
-  //   const newData = {
-  //     id: uuidv1(),
-  //     name: newRoomme,
-  //   };
   let payload = req.body;
-
+  let newObj = { ...payload, id: uuidv1() };
   try {
     if (!fs.existsSync("public/gastos.json")) {
       fs.writeFileSync(
         "public/gastos.json",
-        JSON.stringify([payload], null, 2),
+        JSON.stringify([newObj], null, 2),
         "utf8"
       );
     } else {
@@ -92,12 +85,12 @@ app.post("/gasto", (req, res) => {
         if (data.length == 0) {
           fs.writeFileSync(
             "public/gastos.json",
-            JSON.stringify([payload], null, 2),
+            JSON.stringify([newObj], null, 2),
             "utf8"
           );
         } else {
           let json = JSON.parse(data);
-          json.push(payload);
+          json.push(newObj);
           fs.writeFileSync(
             "public/gastos.json",
             JSON.stringify(json, null, 2),
@@ -112,21 +105,32 @@ app.post("/gasto", (req, res) => {
     console.log("An error has occurred ", err);
   }
 });
-// });
 
 app.get("/roommates", (req, res) => {
   getUsers().then((data) => {
-    console.log(data);
     res.json(data);
   });
 });
 
 app.get("/gastos", (req, res) => {
   getGastos().then((data) => {
-    console.log(data);
-
     res.json(data);
   });
+});
+
+app.delete("/gasto", (req, res) => {
+  fs.readFile("public/gastos.json", (err, data) => {
+    let arr = JSON.parse(data);
+    let aux = arr.filter((item) => {
+      return item.id !== req.query.id;
+    });
+    fs.writeFileSync(
+      "public/gastos.json",
+      JSON.stringify(aux, null, 2),
+      "utf8"
+    );
+  });
+  res.sendStatus(200);
 });
 
 app.listen(3000, () => {
