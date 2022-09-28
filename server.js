@@ -144,14 +144,44 @@ app.get("/gastos", (req, res) => {
 });
 
 app.delete("/gasto", (req, res) => {
+  let aux;
+  let total;
+  let removedItem;
   fs.readFile("public/gastos.json", (err, data) => {
     let arr = JSON.parse(data);
-    let aux = arr.filter((item) => {
+    removedItem = arr.find((item) => {
+      return item.id == req.query.id;
+    });
+    aux = arr.filter((item) => {
       return item.id !== req.query.id;
     });
+    total = aux.reduce((sum, { monto }) => sum + monto, 0);
     fs.writeFileSync(
       "public/gastos.json",
       JSON.stringify(aux, null, 2),
+      "utf8"
+    );
+  });
+
+  fs.readFile("public/roommates.json", (err, data) => {
+    let arr = JSON.parse(data);
+    let debe = total / arr.length;
+    let aux2 = arr.map((item) => {
+      if (item.id == removedItem.uid) {
+        if (item.hasOwnProperty("recibe")) {
+          let totalRecibe = item.recibe - removedItem.monto;
+          console.log(totalRecibe);
+          return { ...item, recibe: totalRecibe, debe };
+        } else {
+          return { ...item, recibe: newObj.monto, debe };
+        }
+      } else {
+        return { ...item, debe };
+      }
+    });
+    fs.writeFileSync(
+      "public/roommates.json",
+      JSON.stringify(aux2, null, 2),
       "utf8"
     );
   });
